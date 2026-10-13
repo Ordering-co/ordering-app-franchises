@@ -1,0 +1,113 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native-permissions/scripts/setup.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+setup_permissions(['AppTrackingTransparency', 'Notifications'])
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignalXCFramework', '3.12.6'
+end
+
+target 'AppFranchises' do
+
+  # React Native Maps dependencies
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps', '7.4.0'
+  pod 'Google-Maps-iOS-Utils'
+
+  # Enable modular headers for Firebase dependencies (required for Swift pods)
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
+  pod 'nanopb', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseInstallations', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+
+  # Facebook SDK: pin to the version verified with this app.
+  # react-native-fbsdk-next only requires `~> 18.0`, and the release builder does not
+  # honor Podfile.lock, so an unpinned install drifted to 18.1.1 which aborts at launch
+  # (uncaught NSInternalInconsistencyException) when FacebookClientToken is missing.
+  # Bump deliberately, with a device launch test, and keep FacebookClientToken in Info.plist.
+  fbsdk_version = '18.1.0'
+  pod 'FBSDKCoreKit_Basics', fbsdk_version
+  pod 'FBAEMKit', fbsdk_version
+  pod 'FBSDKCoreKit', fbsdk_version
+  pod 'FBSDKLoginKit', fbsdk_version
+  pod 'FBSDKShareKit', fbsdk_version
+  pod 'FBSDKGamingServicesKit', fbsdk_version
+
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+
+    # Fix fmt 11.x consteval regression on Xcode 26 / newer Apple Clang
+    fmt_base_header = File.join(installer.sandbox.root, 'fmt/include/fmt/base.h')
+    if File.exist?(fmt_base_header)
+      content = File.read(fmt_base_header)
+      patched = content.gsub(
+        /defined\(__apple_build_version__\) && __apple_build_version__ < \d+L/,
+        'defined(__apple_build_version__)'
+      )
+      File.write(fmt_base_header, patched) if patched != content
+    end
+
+    # Allow non-modular includes in framework modules
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+
+        # Disable bitcode (no longer supported by Apple since Xcode 14)
+        config.build_settings['ENABLE_BITCODE'] = 'NO'
+
+        # Fix iOS deployment target for all pods (minimum 12.0)
+        if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 12.0
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+        end
+
+        # Configure modular headers for intercom-react-native
+        if target.name == 'intercom-react-native'
+          config.build_settings['DEFINES_MODULE'] = 'YES'
+          config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
+          config.build_settings['PRODUCT_MODULE_NAME'] = 'IntercomModule'
+        end
+      end
+    end
+
+    # Strip bitcode from Intercom framework (required for App Store submission)
+    bitcode_strip_path = `xcrun --find bitcode_strip`.chomp
+    Dir.glob("#{installer.config.installation_root}/Pods/Intercom/*.xcframework/**/*.framework/Intercom").each do |framework|
+      system("#{bitcode_strip_path} -r #{framework} -o #{framework}")
+    end
+  end
+end

@@ -1,0 +1,181 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSCameraUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App benötigt Zugriff auf die Kamera für das Profilbild, zum Hochladen von Bildern und um über die Nachrichtenfunktionen der App zu kommunizieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app requires access to the camera for the profile picture, to upload images, and to communicate through the app's messaging features."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La aplicación requiere acceso a la cámara para la foto de perfil, para subir imágenes y para comunicarse a través de las funciones de mensajería de la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'application nécessite l'accès à l'appareil photo pour la photo de profil, pour télécharger des images et pour communiquer via les fonctionnalités de messagerie de l'application."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додаток потребує доступу до камери для фото профілю, завантаження зображень та спілкування через функції обміну повідомленнями додатка."
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App benötigt Zugriff auf den Standort Ihres Geräts (Echtzeit-Standort von Google) und Ihre körperlichen Aktivitäten. Dies ist notwendig, damit Kunden Ihren aktuellen Standort als Fahrer verfolgen können, während Sie deren Bestellung bearbeiten. Die Erfassung der körperlichen Aktivität dient der Optimierung der Akkulaufzeit und stellt sicher, dass Sie nur verfolgt werden, wenn Sie sich auf Ihrer Route bewegen. Diese Ortung wird im Hintergrund verwendet, und die Standortfreigabe für den Kunden endet, sobald die Bestellung ausgeliefert und die App geschlossen wird. Im Hintergrund genutzte Funktionen: Echtzeit-GPS-Ortung von Google Maps."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app requires access to your device's location (real-time location provided by Google) and physical activity. These are necessary to allow customers to track your current location as a driver while you work on their order. Physical activity is used to optimize battery life and only track you while you are moving on your route. This tracking will be used in the background, and location sharing will stop for the customer once the order has been delivered and the app is closed. Features used in the background: real-time GPS tracking from Google Maps."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La aplicación requiere acceso a la ubicación de su dispositivo (ubicación en tiempo real proporcionada por Google) y a la actividad física. Esto es necesario para permitir a los clientes rastrear su ubicación actual como conductor mientras trabaja en su pedido. La actividad física se utiliza para optimizar la vida de la batería y solo rastrearlo mientras está en movimiento en su ruta. Este seguimiento se usará en segundo plano, y la ubicación dejará de compartirse con el cliente una vez que el pedido se haya entregado y la aplicación esté cerrada. Funciones utilizadas en segundo plano: seguimiento GPS en tiempo real de Google Maps."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'application nécessite l'accès à la localisation de votre appareil (position en temps réel fournie par Google) et à votre activité physique. Ceci est nécessaire pour permettre aux clients de suivre votre position actuelle en tant que chauffeur pendant que vous travaillez sur leur commande. L'activité physique est utilisée pour optimiser l'autonomie de la batterie et pour ne vous suivre que lorsque vous êtes en mouvement sur votre itinéraire. Ce suivi sera effectué en arrière-plan, et le partage de la localisation pour le client cessera une fois la commande livrée et l'application fermée. Fonctionnalités utilisées en arrière-plan : suivi GPS en temps réel de Google Maps."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додаток потребує доступу до місцезнаходження вашого пристрою (місцезнаходження в реальному часі від Google) та фізичної активності. Це необхідно для того, щоб клієнти могли відстежувати ваше поточне місцезнаходження як водія під час роботи над їхнім замовленням. Фізична активність використовується для оптимізації заряду батареї та відстеження лише під час руху по маршруту. Це відстеження буде використовуватися у фоновому режимі, а обмін місцезнаходженням з клієнтом припиниться після доставки замовлення та закриття додатка. Функції, що використовуються у фоновому режимі: відстеження GPS в реальному часі від Google Maps."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir benötigen Ihren Standort nur, während Sie eine Adresse hinzufügen, um die nächstgelegene Filiale vorzuschlagen, die Lieferzeit und -gebühr anzuzeigen und Ihre Adresse automatisch auszufüllen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need your location only while you add an address to suggest the nearest franchise, show delivery time & fee, and autofill your address."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Necesitamos su ubicación únicamente mientras agrega una dirección para sugerirle la franquicia más cercana, mostrarle el tiempo y el costo de entrega, y autocompletar su dirección."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous avons besoin de votre localisation uniquement lorsque vous ajoutez une adresse, afin de suggérer la franchise la plus proche, d'afficher le délai et les frais de livraison, et de remplir automatiquement votre adresse."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нам потрібне ваше місцезнаходження лише під час додавання адреси, щоб запропонувати найближчу франшизу, показати час і вартість доставки та автоматично заповнити вашу адресу."
+          }
+        }
+      }
+    },
+    "NSPhotoLibraryUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App benötigt Zugriff auf die Fotobibliothek für das Profilbild, zum Hochladen von Bildern und um über die Nachrichtenfunktionen der App zu kommunizieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app requires access to the photo library for the profile picture, to upload images, and to communicate through the app's messaging features."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La aplicación requiere acceso a la galería de fotos para la foto de perfil, para subir imágenes y para comunicarse a través de las funciones de mensajería de la aplicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'application nécessite l'accès à la photothèque pour la photo de profil, pour télécharger des images et pour communiquer via les fonctionnalités de messagerie de l'application."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додаток потребує доступу до галереї фотографій для фото профілю, завантаження зображень та спілкування через функції обміну повідомленнями додатка."
+          }
+        }
+      }
+    },
+    "NSUserTrackingUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir verwenden Google Analytics, um Ihre Nutzererfahrung zu verbessern und Ihnen einen besseren Service sowie standortbezogene Inhalte anzubieten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We use Google Analytics to improve your user experience and offer you a better service and content base in your location"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizamos Google Analytics para mejorar su experiencia de usuario y ofrecerle un mejor servicio y contenido basado en su ubicación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nous utilisons Google Analytics pour améliorer votre expérience utilisateur et vous offrir un meilleur service ainsi que des contenus basés sur votre localisation."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ми використовуємо Google Analytics для покращення вашого користувацького досвіду та надання кращого сервісу і контенту на основі вашого місцезнаходження."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

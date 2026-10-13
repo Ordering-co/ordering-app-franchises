@@ -1,0 +1,24 @@
+{
+  "app_id": "app_franchises_x",
+  "app_internal_name": "franchise_app",
+  "notification_app": "orderingapp",
+  "app_name": "OrderingPlus",
+  "apple_app_id": "com.ordering.app5",
+  "android_app_id": "com.appfranchises",
+  "merchantId": "com.ordering.v5app5",
+  "project": "YOUR_PROJECT",
+  "api": {
+    "url": "https://api.orderingplus.com",
+    "language": "en",
+    "version": "v400"
+  },
+  "socket": {
+    "url": "https://sockets.orderingplus.com"
+  },
+  "franchiseSlug": null,
+  "businessSlug": null,
+  "show_tutorials": true,
+  "useOptimizeLoad": true,
+  "app_scheme": "orderingapp",
+  "use_root_point": false
+}

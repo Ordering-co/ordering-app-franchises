@@ -1,0 +1,85 @@
+key,value,app_uses,submodule_uses
+"RECAPTCHA_VALIDATION_IS_REQUIRED","The captcha validation is required",0,2
+"RECAPTCHA_VALIDATION_IS_REQUIRED","The ReCaptcha validation is required.",0,3
+"NETWORK_ERROR","Network Error",0,2
+"NETWORK_ERROR","Network error",0,1
+"LOADING","Loading",8,13
+"LOADING","Loading...",3,0
+"OK","Ok",1,2
+"OK","oK",3,0
+"OK","OK",2,0
+"STRIPE_LOAD_ERROR","Failed to load Stripe properly",0,1
+"STRIPE_LOAD_ERROR","Faile to load Stripe properly",1,1
+"KM","km",0,2
+"KM","Km",1,0
+"CANCEL","Cancel",12,0
+"CANCEL","cancel",2,0
+"ADD_NEW_ADDRESS","Add new address",1,0
+"ADD_NEW_ADDRESS","Add new Address",1,0
+"REVIEWS","Reviews",6,0
+"REVIEWS","reviews",1,0
+"YOUR_ORDER","Your order",1,0
+"YOUR_ORDER","Your Order",2,0
+"CHANGE","change",2,0
+"CHANGE","Change",2,0
+"CONTINUE","Continue",10,0
+"CONTINUE","CONTINUE",2,0
+"NO_ADDRESS_FOUND","No address found",1,0
+"NO_ADDRESS_FOUND","No address found for this location",1,0
+"GEOCODING_SERVER_ERROR","Server error: ${err.origin.status}",1,0
+"GEOCODING_SERVER_ERROR","Error from the geocoding server",1,0
+"CONTINUE_WITH_APPLE","Logout with Apple",1,0
+"CONTINUE_WITH_APPLE","Continue with Apple",1,0
+"DELIVERY_FEE","Delivery fee",5,0
+"DELIVERY_FEE","Delivery Fee",4,0
+"DELIVERY_TIME","Delivery time",1,0
+"DELIVERY_TIME","delivery time",2,0
+"PICKUP_TIME","Pickup time",1,0
+"PICKUP_TIME","Pickup Time",1,0
+"NOT_AVAILABLE","Not Available",1,0
+"NOT_AVAILABLE","Not available",2,0
+"ERROR_NOT_FOUND_PRODUCTS","No products found, please change filters.",1,0
+"ERROR_NOT_FOUND_PRODUCTS","No products or stores available, please change your delivery type or address.",1,0
+"REVIEW_ORDER","Review order",2,0
+"REVIEW_ORDER","Review",1,0
+"COMMENTS","Comments",4,0
+"COMMENTS","Special comment",1,0
+"SIGNUP","Signup",2,0
+"SIGNUP","Sign up",1,0
+"TRY_AGAIN","Try again",1,0
+"TRY_AGAIN","Please try again",2,0
+"EMAIL","Email",11,0
+"EMAIL","EMail",1,0
+"OR","or",1,0
+"OR","Or",1,0
+"TO","To",1,0
+"TO","to",2,0
+"VALIDATION_ERROR_REQUIRED","To email is required",1,0
+"VALIDATION_ERROR_REQUIRED","The quantity field is required",1,0
+"VALIDATION_ERROR_MOBILE_PHONE_REQUIRED","The field Mobile phone is required.",2,0
+"VALIDATION_ERROR_MOBILE_PHONE_REQUIRED","The field Mobile phone is required",3,0
+"VALIDATION_ERROR_MOBILE_PHONE_REQUIRED","The field Phone Number is required.",2,0
+"PASSWORD","Password",8,0
+"PASSWORD","password",1,0
+"VALIDATION_ERROR_PASSWORD_REQUIRED","The field Password is required",2,0
+"VALIDATION_ERROR_PASSWORD_REQUIRED","Password is required",1,0
+"GET_VERIFY_CODE","Get verify code",1,0
+"GET_VERIFY_CODE","Get Verify Code",2,0
+"ORDERS","Orders",1,0
+"ORDERS","orders",1,0
+"GIFT_CARD","Gift card",1,0
+"GIFT_CARD","Gift Card",2,0
+"MARKETING_NOTIFICATIONS","Marketing Notifications",1,0
+"MARKETING_NOTIFICATIONS","Marketing notifications",1,0
+"SCHEDULE","SCHEDULE",1,0
+"SCHEDULE","Schedule",2,0
+"ESTIMATED_TIME","Estimated Time",1,0
+"ESTIMATED_TIME","Estimated time",1,0
+"REORDER","REORDER",1,0
+"REORDER","Reorder",1,0
+"SOLD_OUT","Sold out",4,0
+"SOLD_OUT","SOLD OUT",2,0
+"SPECIAL_COMMENT","Special comment",1,0
+"SPECIAL_COMMENT","Special Comment",1,0
+"CONNECTION_STATUS","Status",1,0
+"CONNECTION_STATUS","Connection status",1,0

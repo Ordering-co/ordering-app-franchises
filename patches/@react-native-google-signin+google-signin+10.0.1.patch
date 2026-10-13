@@ -1,0 +1,55 @@
+diff --git a/node_modules/@react-native-google-signin/google-signin/ios/RNGoogleSignin.m b/node_modules/@react-native-google-signin/google-signin/ios/RNGoogleSignin.m
+index 29172ee..f67fab3 100644
+--- a/node_modules/@react-native-google-signin/google-signin/ios/RNGoogleSignin.m
++++ b/node_modules/@react-native-google-signin/google-signin/ios/RNGoogleSignin.m
+@@ -89,9 +89,13 @@ + (BOOL)requiresMainQueueSetup
+ RCT_EXPORT_METHOD(signInSilently:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject)
+ {
+-  [GIDSignIn.sharedInstance restorePreviousSignInWithCompletion:^(GIDGoogleUser * _Nullable user, NSError * _Nullable error) {
+-    [self handleCompletion:user serverAuthCode:nil withError:error withResolver:resolve withRejector:reject fromCallsite:@"signInSilently"];
+-  }];
++  @try {
++    [GIDSignIn.sharedInstance restorePreviousSignInWithCompletion:^(GIDGoogleUser * _Nullable user, NSError * _Nullable error) {
++      [self handleCompletion:user serverAuthCode:nil withError:error withResolver:resolve withRejector:reject fromCallsite:@"signInSilently"];
++    }];
++  } @catch (NSException *exception) {
++    reject(@"SIGN_IN_CONFIG_ERROR", exception.reason, nil);
++  }
+ }
+ 
+ RCT_EXPORT_METHOD(signIn:(NSDictionary *)options
+@@ -103,9 +107,13 @@ + (BOOL)requiresMainQueueSetup
+       NSString* hint = options[@"loginHint"];
+       NSArray* scopes = self.scopes;
+ 
+-      [GIDSignIn.sharedInstance signInWithPresentingViewController:presentingViewController hint:hint additionalScopes:scopes completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
+-          [self handleCompletion:signInResult withError:error withResolver:resolve withRejector:reject fromCallsite:@"signIn"];
+-      }];
++      @try {
++        [GIDSignIn.sharedInstance signInWithPresentingViewController:presentingViewController hint:hint additionalScopes:scopes completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
++            [self handleCompletion:signInResult withError:error withResolver:resolve withRejector:reject fromCallsite:@"signIn"];
++        }];
++      } @catch (NSException *exception) {
++        reject(@"SIGN_IN_CONFIG_ERROR", exception.reason, nil);
++      }
+   });
+ }
+ 
+@@ -122,9 +130,13 @@ + (BOOL)requiresMainQueueSetup
+       NSArray* scopes = options[@"scopes"];
+       UIViewController* presentingViewController = RCTPresentedViewController();
+ 
+-      [currentUser addScopes:scopes presentingViewController:presentingViewController completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
+-          [self handleCompletion:signInResult withError:error withResolver:resolve withRejector:reject fromCallsite:@"addScopes"];
+-      }];
++      @try {
++        [currentUser addScopes:scopes presentingViewController:presentingViewController completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
++            [self handleCompletion:signInResult withError:error withResolver:resolve withRejector:reject fromCallsite:@"addScopes"];
++        }];
++      } @catch (NSException *exception) {
++        reject(@"SIGN_IN_CONFIG_ERROR", exception.reason, nil);
++      }
+   });
+ }
+ 
