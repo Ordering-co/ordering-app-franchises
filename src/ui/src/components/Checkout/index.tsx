@@ -9,6 +9,7 @@ import { SectionItem } from './SectionItem'
 import { HeaderTitle } from './HeaderTitle'
 import { InfoMessage } from './InfoMessage'
 import { parseDriverTipOptions } from './parseDriverTipOptions'
+import { useGuestCheckoutPermission } from '../../hooks/useGuestCheckoutPermission'
 
 import {
   ChContainer,
@@ -35,6 +36,7 @@ import {
 } from '@components';
 
 import {
+  OButton,
   OText,
   OModal,
   DriverTips,
@@ -97,6 +99,11 @@ const CheckoutUI = (props: any) => {
   const [{ configs }] = useConfig();
   const [{ parsePrice, parseDate, GiftCardPaymethods }] = useUtils();
   const [{ options, carts, loading }, { changePaymethod }] = useOrder();
+  const { guestCheckoutAllowed, guestOrderBlocked, canPlaceOrder } = useGuestCheckoutPermission({
+    configs,
+    orderType: options?.type,
+    user
+  })
   const [ordering] = useApi()
   const [events] = useEvent()
   const [{ order: lastOrder }] = useHomeValues()
@@ -168,7 +175,7 @@ const CheckoutUI = (props: any) => {
   const validateCouponField = (guestCheckoutCoupon?.enabled && (user?.guest_id ? guestCheckoutCoupon?.required_with_guest : guestCheckoutCoupon?.required)) && !cart?.offers?.some((offer: any) => offer?.type === 2)
   const validateZipcodeCard = (guestCheckoutZipcode?.enabled && (user?.guest_id ? guestCheckoutZipcode?.required_with_guest : guestCheckoutZipcode?.required)) && paymethodSelected?.gateway === 'stripe' && paymethodSelected?.data?.card && !paymethodSelected?.data?.card?.zipcode
 
-  const isDisabledButtonPlace = loading || !cart?.valid || (!paymethodSelected && cart?.balance > 0) ||
+  const isDisabledButtonPlace = guestOrderBlocked || loading || !cart?.valid || (!paymethodSelected && cart?.balance > 0) ||
     placing ||
     !cart?.valid_maximum ||
     (!cart?.valid_minimum && !(cart?.discount_type === 1 && cart?.discount_rate === 100)) ||
@@ -206,6 +213,7 @@ const CheckoutUI = (props: any) => {
   }
 
   const handlePlaceOrder = (confirmPayment: any, forcePlace: boolean = false, paymentOptions?: any) => {
+    if (!canPlaceOrder()) return
     if (stripePaymethods.includes(paymethodSelected?.gateway) && user?.guest_id) {
       setOpenModal({ ...openModal, signup: true, isGuest: true })
       return
@@ -235,6 +243,7 @@ const CheckoutUI = (props: any) => {
   }
 
   const handlePlaceOrderAsGuest = () => {
+    if (!canPlaceOrder(true)) return
     handlerClickPlaceOrder && handlerClickPlaceOrder()
   }
 
@@ -616,6 +625,23 @@ const CheckoutUI = (props: any) => {
                     {t('WARNING_INVALID_COUPON_FIELD', 'Coupon is required.')}
                   </OText>
                 )}
+              {guestOrderBlocked && (
+                <View style={{ marginTop: 12 }}>
+                  <OText color={theme.colors.error} size={12}>
+                    {t('LOGIN_SIGN_UP_COMPLETE_ORDER', 'Login/Sign up to complete your order.')}
+                  </OText>
+                  <OButton
+                    text={t('LOGIN', 'Login')}
+                    style={{ marginTop: 8 }}
+                    onClick={() => setOpenModal({ ...openModal, login: true })}
+                  />
+                  <OButton
+                    text={t('SIGNUP', 'Signup')}
+                    style={{ marginTop: 8 }}
+                    onClick={() => setOpenModal({ ...openModal, signup: true })}
+                  />
+                </View>
+              )}
             </ChErrors>
           )}
           <OModal
@@ -643,7 +669,11 @@ const CheckoutUI = (props: any) => {
                 isCheckoutPlace
                 hideUpdateButton
                 handlePlaceOrderAsGuest={handlePlaceOrderAsGuest}
-                onClose={() => setIsOpen(false)}
+                isAllowGuest={guestCheckoutAllowed}
+                onClose={() => {
+                  if (!canPlaceOrder()) return
+                  setIsOpen(false)
+                }}
                 setIsOpen={setIsOpen}
               />
             </View>
@@ -680,7 +710,9 @@ const CheckoutUI = (props: any) => {
       {!cartState.loading && cart && cart?.status !== 2 && (
         <FloatingButton
           loading={loading}
-          text={!cart?.valid_maximum
+          text={guestOrderBlocked
+            ? t('LOGIN_SIGN_UP_COMPLETE_ORDER', 'Login/Sign up to complete your order.')
+            : !cart?.valid_maximum
             ? (
               `${t('MAXIMUM_SUBTOTAL_ORDER', 'Maximum subtotal order')}: ${parsePrice(cart?.maximum)}`
             )
@@ -696,12 +728,15 @@ const CheckoutUI = (props: any) => {
                   : t('PLACE_ORDER', 'Place Order')
           }
           handleClick={
-            isDisabledButtonPlace
+            guestOrderBlocked
+              ? () => {}
+              : isDisabledButtonPlace
               ? () => navigateToPaymentOptions()
               : methodsPay.includes(paymethodSelected?.gateway)
                 ? () => setPlaceByMethodPay(true)
                 : () => handlePlaceOrder(null)
           }
+          disabled={guestOrderBlocked}
         />
       )}
       {

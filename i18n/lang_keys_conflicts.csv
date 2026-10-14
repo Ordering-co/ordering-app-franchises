@@ -44,7 +44,7 @@ key,value,app_uses,submodule_uses
 "REVIEW_ORDER","Review",1,0
 "COMMENTS","Comments",4,0
 "COMMENTS","Special comment",1,0
-"SIGNUP","Signup",2,0
+"SIGNUP","Signup",3,0
 "SIGNUP","Sign up",1,0
 "TRY_AGAIN","Try again",1,0
 "TRY_AGAIN","Please try again",2,0

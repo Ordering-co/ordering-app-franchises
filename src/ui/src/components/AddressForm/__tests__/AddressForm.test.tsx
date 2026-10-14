@@ -43,6 +43,7 @@ describe('AddressForm UI', () => {
   beforeEach(() => {
     global.fetch = jest.fn(async () => ({
       json: async () => ({
+        status: 'OK',
         result: {
           formatted_address: '9 Pine St',
           place_id: 'place-1',

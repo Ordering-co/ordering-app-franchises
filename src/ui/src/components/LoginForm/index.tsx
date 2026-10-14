@@ -24,6 +24,7 @@ import {
   useLanguage,
   useConfig,
   useSession,
+  useOrder,
   ToastType,
   useToast
 } from '@components';
@@ -43,6 +44,7 @@ import { LoginParams } from '../../types';
 import { Otp } from './Otp'
 import { Tabs } from '../Forms/Tabs'
 import { SocialButtons } from '../Forms/SocialButtons'
+import { useGuestCheckoutPermission } from '../../hooks/useGuestCheckoutPermission'
 
 const LoginFormUI = (props: LoginParams) => {
   const {
@@ -72,7 +74,13 @@ const LoginFormUI = (props: LoginParams) => {
   const [, { showToast }] = useToast()
   const [, t] = useLanguage()
   const [{ configs }] = useConfig()
-  const [{ auth }] = useSession()
+  const [{ auth, user }] = useSession()
+  const [orderState] = useOrder()
+  const { guestCheckoutAllowed, canUseGuestCheckout } = useGuestCheckoutPermission({
+    configs,
+    orderType: orderState?.options?.type,
+    user
+  })
   const { control, handleSubmit, errors, reset, register, setValue } = useForm()
   const [passwordSee, setPasswordSee] = useState(false)
   const [isLoadingVerifyModal, setIsLoadingVerifyModal] = useState(false)
@@ -124,6 +132,7 @@ const LoginFormUI = (props: LoginParams) => {
   };
 
   const handleGuestUser = () => {
+    if (!canUseGuestCheckout()) return
     if (props.handleGuestUser) {
       props.handleGuestUser?.()
       return
@@ -528,7 +537,7 @@ const LoginFormUI = (props: LoginParams) => {
               isLoading={formState.loading}
               onClick={handleSubmit(onSubmit)}
             />
-            {configs?.guest_checkout_enabled?.value === '1' && (
+            {guestCheckoutAllowed && (
               <OButton
                 text={t('CONTINUE_AS_GUEST', 'Continue as Guest')}
                 style={{ width: '100%', marginTop: 20 }}

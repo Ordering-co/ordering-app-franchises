@@ -11,8 +11,8 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 
-import { orderTypeList } from '../../utils'
 import { ServiceFormParams } from '../../types'
+import { useGuestCheckoutPermission } from '../../hooks/useGuestCheckoutPermission'
 
 import {
   Container,
@@ -60,7 +60,7 @@ const ServiceFormUI = (props: ServiceFormParams) => {
   const { top } = useSafeAreaInsets()
   const [{ configs }] = useConfig()
   const [orderState] = useOrder()
-  const [{ auth }] = useSession()
+  const [{ auth, user }] = useSession()
   const { product, loading, error } = productObject;
 
   const [selectDate, setSelectedDate] = useState<any>(new Date())
@@ -71,8 +71,12 @@ const ServiceFormUI = (props: ServiceFormParams) => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentProfessional, setCurrentProfessional] = useState<any>(null)
 
-  const guestCheckoutEnabled = configs?.guest_checkout_enabled?.value === '1'
-  const orderTypeEnabled = !orderTypeList[orderState?.options?.type - 1] || configs?.allowed_order_types_guest_checkout?.value?.includes(orderTypeList[orderState?.options?.type - 1])
+  const { guestCheckoutAllowed: guestCheckoutEnabled, canUseGuestCheckout } = useGuestCheckoutPermission({
+    configs,
+    orderType: orderState?.options?.type,
+    user
+  })
+  const orderTypeEnabled = guestCheckoutEnabled
 
   const dropdownRef = useRef<any>(null)
 
@@ -168,6 +172,7 @@ const ServiceFormUI = (props: ServiceFormParams) => {
   }
 
   const handleUpdateGuest = () => {
+    if (!canUseGuestCheckout()) return
     const guestToken = uuid.v4()
     if (guestToken) handleCreateGuestUser({ guest_token: guestToken })
   }

@@ -327,6 +327,7 @@ key,value,source,note
 "LOGIN_FOR_OTP_PHONE","For OTP Phone","app",""
 "LOGIN_FOR_PHONE","For Phone","app",""
 "LOGIN_REQUIRED_FOR_REWARDS","You must be logged in to see the Rewards","app",""
+"LOGIN_SIGN_UP_COMPLETE_ORDER","Login/Sign up to complete your order.","app",""
 "LOGIN_SIGNUP","Login / Sign Up","app",""
 "LOGIN_WITH_FACEBOOK_CANCELLED","Login cancelled","app",""
 "LOGISTIC_DEFAULT_ETA_TIME","10","submodule",""

@@ -54,7 +54,7 @@ import {
   useSession
 } from '@components';
 
-import { orderTypeList } from '../../utils';
+import { useGuestCheckoutPermission } from '../../hooks/useGuestCheckoutPermission'
 import { ActionButton } from './ActionButton'
 import { ProductExtraOptions } from './ProductExtraOptions';
 import { Utils } from './utils'
@@ -101,7 +101,7 @@ export const ProductOptionsUI = (props: any) => {
   const [, { showToast }] = useToast()
   const [events] = useEvent()
   const commentRef = useRef()
-  const [{ auth }] = useSession()
+  const [{ auth, user }] = useSession()
   const [{ parsePrice, optimizeImage }] = useUtils()
   const [, t] = useLanguage()
   const [orderState] = useOrder()
@@ -148,8 +148,12 @@ export const ProductOptionsUI = (props: any) => {
   const [viewedProduct, setViewedProduct] = useState<any>(null)
   const [toggleResizeImg, setToggleResizeImg] = useState(false)
 
-  const guestCheckoutEnabled = configs?.guest_checkout_enabled?.value === '1'
-  const orderTypeEnabled = !orderTypeList[orderState?.options?.type - 1] || configs?.allowed_order_types_guest_checkout?.value?.includes(orderTypeList[orderState?.options?.type - 1])
+  const { guestCheckoutAllowed: guestCheckoutEnabled, canUseGuestCheckout } = useGuestCheckoutPermission({
+    configs,
+    orderType: orderState?.options?.type,
+    user
+  })
+  const orderTypeEnabled = guestCheckoutEnabled
   const optionsLength = product?.extras?.reduce((acc: number, extras: any) => acc + extras?.options?.length, 0) + (!!product?.ingredients?.length ? 1 : 0)
   const isMaxLengthPrice = (price?: number) => (price ? parsePrice(price)?.length : parsePrice(productCart?.price).length) > 9
   const hideFavoriteIcon = theme?.business_view?.components?.products?.components?.product?.components?.favorite?.hidden
@@ -214,6 +218,7 @@ export const ProductOptionsUI = (props: any) => {
   }
 
   const handleUpdateGuest = () => {
+    if (!canUseGuestCheckout()) return
     const guestToken = uuid.v4()
     if (guestToken) handleCreateGuestUser({ guest_token: guestToken })
   }

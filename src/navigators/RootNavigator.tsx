@@ -26,6 +26,7 @@ import NetInfo from '@react-native-community/netinfo'
 import { useOrder, useSession, useConfig, useApi, useWebsocket, useLanguage } from '@components';
 import * as RootNavigation from '../navigators/NavigationRef';
 import settings from '../config.js';
+import { isGuestCheckoutAllowed } from '../ui/src/utils/guestCheckout'
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(utc);
@@ -42,7 +43,7 @@ import NetworkError from '../pages/NetworkError';
 import UserVerification from '../pages/UserVerification';
 import ProjectForm from '../pages/ProjectForm'
 
-import { _retrieveStoreData, _setStoreData, orderTypeList, useBusinessSelected } from '@ui';
+import { _retrieveStoreData, _setStoreData, useBusinessSelected } from '@ui';
 
 const permissionIosAlertReminder = false;
 
@@ -88,10 +89,7 @@ const RootNavigator = () => {
   const isPhoneVerifyRequired = auth && configs?.verification_phone_required?.value === '1' && !user?.phone_verified
   const isUserVerifyRequired = isEmailVerifyRequired || isPhoneVerifyRequired
   const isEnableAppVersionCheck = configs?.app_version?.value === '1'
-  const guestCheckoutEnabled =
-    configs?.guest_checkout_enabled?.value === '1' &&
-    (!orderTypeList[orderStatus?.options?.type - 1] || configs?.allowed_order_types_guest_checkout?.value?.includes(orderTypeList[orderStatus?.options?.type - 1])) &&
-    user?.guest_id
+  const guestCheckoutEnabled = isGuestCheckoutAllowed(configs, orderStatus?.options?.type) && user?.guest_id
 
   const validDate = (date: any) => {
     if (!date) {
