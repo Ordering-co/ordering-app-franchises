@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B388EC5B036ED1BA6F0ED50 /* libPods-AppFranchises.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D3C495015C469555AD96BCB /* libPods-AppFranchises.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.swift */; };
+		AFA003E12800000100000001 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA003E12800000100000002 /* SceneDelegate.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		295C820A2E7DD6D300EF264E /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 295C82092E7DD6D300EF264E /* InfoPlist.xcstrings */; };
 		3EEF1301270CB1F70012F3DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF1300270CB1F70012F3DC /* GoogleService-Info.plist */; };
@@ -53,6 +54,7 @@
 		04B4B5901D689B20C00021A9 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AppFranchises.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppFranchises.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB01A68108700A75B9A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AppFranchises/AppDelegate.swift; sourceTree = "<group>"; };
+		AFA003E12800000100000002 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = AppFranchises/SceneDelegate.swift; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AppFranchises/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AppFranchises/Info.plist; sourceTree = "<group>"; };
 		2061A14165EB49489F1431BA /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				C3BB4D8726B8DC2D00F27AEA /* AppFranchises.entitlements */,
 				3EEF1300270CB1F70012F3DC /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.swift */,
+				AFA003E12800000100000002 /* SceneDelegate.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AABB0002PRIVACYINFO00002 /* PrivacyInfo.xcprivacy */,
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.swift in Sources */,
+				AFA003E12800000100000001 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
