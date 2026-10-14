@@ -1,3 +1,4 @@
+import { isLocalSimulatorMode } from './onboarding/ios-local-mode';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -292,8 +293,8 @@ const TemplateApp = () => {
       <CustomStatusBar backgroundColor={theme.colors.backgroundPage} />
       <ThemeProvider theme={theme}>
         <OrderingProvider isDisableToast settings={{ ...settings, userAgent: userAgent }} Alert={Alert} isValidColor={isValidColor}>
-          <AnalyticsSegment />
-          <FacebookPixel />
+          {!isLocalSimulatorMode() && <AnalyticsSegment />}
+          {!isLocalSimulatorMode() && <FacebookPixel />}
           <NavigationContainer ref={navigationRef} linking={linking}>
             <PermissionsProvider>
               <BusinessSelectedProvider>

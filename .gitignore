@@ -89,3 +89,9 @@ ios/GoogleService-Info.plist
 *.mobileprovision
 *.p12
 *.p8
+
+# Local onboarding backups and evidence (may contain private local configuration)
+.ordering-setup/
+
+# Generated Debug-only simulator project adapters
+ios/.ordering-local-*

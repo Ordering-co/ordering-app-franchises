@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "product": "franchise-app",
+  "configFile": "src/config.json",
+  "projectPaths": [
+    {
+      "path": [
+        "project"
+      ],
+      "required": true
+    }
+  ],
+  "projectPlaceholders": [
+    "",
+    "YOUR_PROJECT",
+    "your-project",
+    "your-project-slug"
+  ],
+  "additionalSelection": {
+    "field": "franchiseSlug",
+    "flag": "franchise-slug",
+    "endpoint": "franchises",
+    "identity": "slug",
+    "required": true,
+    "placeholders": [
+      "",
+      "0"
+    ],
+    "persist": "id"
+  },
+  "iosTarget": "AppFranchises"
+}

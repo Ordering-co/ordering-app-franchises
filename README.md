@@ -1,74 +1,52 @@
 # Ordering Franchise App
 
-Customers can browse a franchise catalog, choose products, use checkout, track orders, manage their account, and exchange order messages.
+Copy this single prompt into your coding assistant from the cloned repository:
 
-This is a bare React Native 0.81.1 application with React 19.1.0 and TypeScript. The headless Ordering SDK is a submodule at `src/@/components`; the app UI is in `src/ui` and screen wiring is in `src/pages` and `src/navigators`.
-
-## Requirements
-
-- Node.js 20.19.4 or newer and Yarn Classic 1.22.
-- Android development: JDK 17, Android Studio and the SDK versions declared in `android/build.gradle`.
-- iOS development: macOS, Xcode supporting the project's deployment target, the Ruby version in `.ruby-version`, Bundler and CocoaPods.
-- Your own Ordering project and backend configuration. SDK source is fetched recursively from its public repository.
-
-## Setup
-
-```sh
-git clone --recurse-submodules https://github.com/Ordering-co/ordering-app-franchises.git
-cd ordering-app-franchises
-yarn install --frozen-lockfile
+```text
+Set up this Ordering Franchise app using setup.md. Detect my project or ask for its slug and an explicit franchise choice. Configure it safely, install the pinned dependencies and open a simulator. Use the local preview when Firebase files are missing. Verify the displayed project and one visible edit with Fast Refresh.
 ```
 
-If you cloned without submodules, run `git submodule update --init --recursive`. Keep the SDK revision recorded by the parent repository.
+Customers can browse a chosen franchise, use the catalog and checkout, track orders and manage their consumer account. React Native 0.81.1, React 19.1 and TypeScript; native Android/iOS source is included.
 
-Edit `src/config.json`: set `project` to your own project. Review the app identifiers, API version/language, API/socket endpoints and existing feature flags for your deployment. Public app IDs and endpoint defaults are included; they do not provide backend access or credentials. `builder.json` describes native project/package identifiers, and `app.json` supplies the registered native component name. Keep native names and bundle/package IDs consistent when configuring your own application.
+## Start with your project
 
-Native configuration is required before launching:
+1. Clone the public app with its pinned SDK:
 
-- Register your Android/iOS apps in your own Firebase project. Add `android/app/google-services.json` and `ios/GoogleService-Info.plist`, including the iOS file in the `AppFranchises` target. These registrations are not supplied.
-- Replace `_GOOGLE_MAPS_API_KEY_` in the Android manifest and iOS AppDelegate with your restricted keys for the corresponding native bundle/package. Set your own Google credentials in backend configuration where required.
-- Configure your own OneSignal application, notification extension app group and push entitlements. Both targets must use the same app group; configure its value explicitly in each entitlement file.
-- Select your Apple development team and provisioning profiles in Xcode. Supply your own production Android signing configuration. The included `debug.keystore` is the standard public React Native development template; use it only for local debug builds.
-- Configure Facebook App ID/client token and URL scheme, Google sign-in IDs, Intercom app/native SDK keys, Segment settings, and Stripe/Apple merchant registration for the features enabled by your project. Existing placeholder guards for optional integrations are preserved.
+   ```sh
+   git clone --recurse-submodules https://github.com/Ordering-co/ordering-app-franchises.git
+   cd ordering-app-franchises
+   yarn install --frozen-lockfile
+   ```
 
-Do not commit credentials or private signing files. Generated service registrations are ignored by `.gitignore`. `firebase.json` contains Firebase behavior settings, not a Firebase registration.
+2. Inspect an existing connection, then configure your explicitly chosen project:
 
-For iOS dependencies:
+   ```sh
+   node scripts/onboarding/cli.mjs detect
+   node scripts/onboarding/cli.mjs configure --project YOUR_PROJECT_SLUG --franchise-slug YOUR_FRANCHISE_SLUG
+   node scripts/onboarding/cli.mjs doctor
+   ```
+
+   Detection does not log you into the consumer app. If no connection is available, enter your own project slug manually; public validation confirms the destination, not ownership or authentication. The franchise slug must belong to that project and be enabled; no first franchise is selected automatically.
+
+3. Follow [setup.md](setup.md) for your platform, an explicit iOS simulator preview without Firebase or your own native service registrations, native launch, the first visible edit and troubleshooting. A Metro process alone is not a running mobile app.
+
+Use Node 22 LTS (minimum 20.19.4), Yarn Classic 1.22, JDK 17 for Android, or macOS/Xcode 16.1+ for iOS. The pinned Ruby, Bundler and CocoaPods requirements are in the runbook. Do not remove lockfiles to bypass an installation failure.
+
+## Checks and source
 
 ```sh
-bundle install
-cd ios
-bundle exec pod install
-cd ..
-```
-
-Start Metro with `yarn start`, then run `yarn android` or `yarn ios` from another terminal. Android/iOS commands require a configured emulator, simulator or device and native toolchain.
-
-## Local checks
-
-```sh
+node --test scripts/onboarding/*.test.mjs
+yarn test:onboarding
 yarn lint:check
-yarn tsc --noEmit
-yarn test --runInBand --watchman=false
+yarn exec tsc --noEmit
 yarn test:coverage --runInBand --watchman=false
+yarn test:coverage:summary --no-run
 yarn i18n:verify
 yarn i18n:check-generated
 ```
 
-`yarn lint` applies automatic fixes; `lint:check` only reports findings. Type checking and linting may expose existing diagnostics in the app or SDK. Inspect those diagnostics before making changes. `test:coverage` reports the scope declared in `jest/coverage-include.js`; it does not verify every native integration.
-
-Catalog maintenance is documented in [i18n/README.md](i18n/README.md). Existing translated values are retained; any English fallback in another locale should be translated for that locale before production use. The default translation sync command is a dry run; live sync requires explicit credentials for your own backend and writes server data.
-
-To inspect JavaScript bundles without launching a device:
-
-```sh
-mkdir -p build
-yarn react-native bundle --platform android --dev false --entry-file index.js --bundle-output build/android.jsbundle --assets-dest build/android-assets --max-workers 2
-yarn react-native bundle --platform ios --dev false --entry-file index.js --bundle-output build/ios.jsbundle --assets-dest build/ios-assets --max-workers 2
-```
-
-JavaScript bundling does not produce or validate an APK/IPA, native signing, provider registrations, or the behavior of your backend tenant. Login, checkout, deliveries, location and notifications require separate testing with your own configured services and devices.
+The SDK is the gitlink at `src/@/components`, fetched from `https://github.com/Finitless-com/ordering-components.git`. If needed, run `git submodule update --init --recursive`; keep the recorded revision. The app UI lives in `src/ui`; screen wiring lives in `src/pages` and `src/navigators`. Translation maintenance is in [i18n/README.md](i18n/README.md). Tests and JS bundling do not verify native providers, payments, or real orders. The latest local evidence is in [docs/onboarding-verification.md](docs/onboarding-verification.md).
 
 ## License
 
-This application is licensed under [license-ordering.txt](license-ordering.txt). Third-party dependencies and bundled notices retain their respective licenses.
+This code is distributed under [license-ordering.txt](license-ordering.txt). The SDK, dependencies and third-party assets retain their own licenses and notices.
