@@ -62,3 +62,20 @@ Consumer login, guest account creation, authenticated orders, messages, payments
 ## Coordinated simulator proof
 
 The principal observed the real app and its selected `orderingv1` project on the dedicated iOS Simulator, then changed only the local banner text. [Before](onboarding-evidence/before.png) and [after](onboarding-evidence/after.png) show the visible change through Fast Refresh without a manual reload for that text change. The source was restored exactly before commit. Franchise selection was explicitly `burger_palace`, validated to numeric ID1; no guest/checkout action was used. Firebase, push, maps, tracking and automatic location remain disabled in this explicit local preview. Ordinary consumer authentication and production integrations are not measured.
+
+## Anonymous public clone verification
+
+A fresh anonymous clone at source `5fb09813cd13552b759940a7dd774101221b17c3`, with the pinned public SDK submodule, completed frozen Yarn installation, project-local frozen Ruby/Bundler dependencies and `pod install --deployment`. Public configure/doctor selected `orderingv1` and resolved the explicitly chosen `burger_palace` to ID1. Repeating configure preserved the modified app name and a nested unknown configuration field. The adapter built a new app from this clone into a new DerivedData directory, installed/launched it in its own new simulator, and repeated successfully while reusing the same verified Metro process. No app binary or private registration was copied from the earlier worktree.
+
+Central QA observed the project/slug in the actual clean-clone app, then observed “My clean Franchise edit” after an isolated source text change without reloading. The source component was restored to its exact saved bytes. [Sanitized results](onboarding-clean-verification.json) record the checks; the images below show the real baseline and refreshed text. No consumer login, guest account creation or order action occurred.
+
+![Clean clone before the visible edit](images/franchise-clean-before.png)
+
+![Clean clone after Fast Refresh](images/franchise-clean-after.png)
+
+
+## Repeat native setup
+
+After a local preview has generated its ignored simulator project, CocoaPods sees two app projects in `ios/`. The Podfile explicitly selects the original source project using CocoaPods' [documented project selector](https://guides.cocoapods.org/syntax/podfile.html#project). Repeating `pod install --deployment` with both projects present passed; dependency entries, versions, sources and pins remained byte-identical after the mechanical Podfile checksum update. CocoaPods' incidental source-project serialization was restored to its exact prior bytes.
+
+The final repeat used published source `e54bab46c3bf0f122b1ce91e2534210d3e59fbf1`, including the explicit CocoaPods source-project selector. With both original and generated projects present, `pod install --deployment` passed without moving either project. Configure preserved the same personalization, and the adapter again compiled sources, installed and launched while reusing this clone's verified simulator and Metro. Source-project serialization was restored exactly afterward. The visible-edit images above correspond to the preceding integrated JavaScript source; this final selector change did not change JavaScript behavior.
