@@ -1,4 +1,5 @@
 import React from 'react'
+import { LocalProjectBanner } from '../../../../onboarding/local-project-banner'
 import { View, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useTheme } from 'styled-components/native'
 import FastImage from 'react-native-fast-image'
@@ -25,6 +26,7 @@ export const Home = (props: any) => {
 
   return (
     <View>
+      <LocalProjectBanner />
       <View style={{ position: 'relative', height: HEIGHT * 0.2 }}>
         <FastImage
           style={{ width: '100%', height: '100%' }}

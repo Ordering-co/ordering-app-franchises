@@ -1,3 +1,4 @@
+import { isLocalSimulatorMode } from '../onboarding/ios-local-mode';
 import React, { useState, useEffect, useRef } from 'react';
 import { shouldPromptForPushNotifications, shouldSetupOneSignal } from './oneSignalSetup';
 import { isFirebasePushEnabled, shouldSetupFirebasePush } from './firebasePushSetup';
@@ -102,6 +103,10 @@ const RootNavigator = () => {
   };
 
   const firebasePushSetup = async () => {
+    if (isLocalSimulatorMode()) {
+      setIsPushLoading({ loading: false });
+      return;
+    }
     setIsPushLoading({ loading: true });
     const messaging = getMessaging()
 
@@ -201,6 +206,10 @@ const RootNavigator = () => {
   };
 
   const oneSignalSetup = async () => {
+    if (isLocalSimulatorMode()) {
+      setIsPushLoading({ loading: false });
+      return;
+    }
     setIsPushLoading({ loading: true });
     const data = {
       appId: configs?.onesignal_orderingapp_id?.value,
@@ -271,6 +280,7 @@ const RootNavigator = () => {
   };
 
   const permissionsSetup = async () => {
+    if (isLocalSimulatorMode()) return;
     if (Platform.OS !== 'ios' || permissionsState.isLoading) return
 
     try {
@@ -369,6 +379,10 @@ const RootNavigator = () => {
   }, [orderStatus.options?.moment]);
 
   useEffect(() => {
+    if (isLocalSimulatorMode()) {
+      setIsPushLoading({ loading: false });
+      return;
+    }
     const appId = firebaseEnabled ? null : configs?.onesignal_orderingapp_id?.value;
     if (shouldSetupFirebasePush({ configsLoading, enabled: firebaseEnabled, auth })) {
       firebasePushSetup();
@@ -384,6 +398,10 @@ const RootNavigator = () => {
   }, [configsLoading, configs?.onesignal_orderingapp_id?.value, configs?.firebase_push_enabled?.value, auth]);
 
   const subscribePushNotifications = async () => {
+    if (isLocalSimulatorMode()) {
+      setIsPushLoading({ loading: false });
+      return;
+    }
     setIsPushLoading({ loading: true });
     try {
       const url = `${ordering.root}/users/${user.id}/notification_tokens`
@@ -572,7 +590,8 @@ const RootNavigator = () => {
 
   return (
     <Stack.Navigator>
-      {!loaded && (
+      {/* Keep the loading route while NetInfo has not supplied its first value. */}
+      {(!loaded || !connectionState) && (
         <Stack.Screen
           name='LoadingScreen'
           component={NetworkError}

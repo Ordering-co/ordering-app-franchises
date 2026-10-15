@@ -1,5 +1,21 @@
 # Ordering Franchise App
 
+Copy this single prompt into your coding assistant:
+
+```text
+Get https://github.com/Ordering-co/ordering-app-franchises.git, preserving any existing checkout. Read setup.md and set up my project. Detect its connection or ask for its slug. Ask me to choose an explicit franchise slug; never pick the first franchise. Install the pinned dependencies and open the app; use the explicit local preview if Firebase files are missing. Verify the displayed project and franchise and one visible edit with Fast Refresh.
+```
+
+## Your three steps
+
+1. Paste the prompt above; your assistant follows [setup.md](setup.md).
+2. Confirm your Ordering project and explicitly choose a franchise slug. Sign in to the developer connection only if needed; consumer login in the app is separate.
+3. Check the destination label in the local preview, then observe one visible edit through Fast Refresh.
+
+## Manual alternative
+
+Follow [setup.md](setup.md) for the pinned toolchains, native setup, the explicit local simulator preview without Firebase and troubleshooting. `configure` deliberately activates development onboarding with the source boolean `localProjectConfigured: true`; a historical project alone does not activate validation or session migration. Normal legacy development and Release keep their original selectors, flags and sessions.
+
 Customers can browse a franchise catalog, choose products, use checkout, track orders, manage their account, and exchange order messages.
 
 This is a bare React Native 0.81.1 application with React 19.1.0 and TypeScript. The headless Ordering SDK is a submodule at `src/@/components`; the app UI is in `src/ui` and screen wiring is in `src/pages` and `src/navigators`.
@@ -21,9 +37,21 @@ yarn install --frozen-lockfile
 
 If you cloned without submodules, run `git submodule update --init --recursive`. Keep the SDK revision recorded by the parent repository.
 
-Edit `src/config.json`: set `project` to your own project. Review the app identifiers, API version/language, API/socket endpoints and existing feature flags for your deployment. Public app IDs and endpoint defaults are included; they do not provide backend access or credentials. `builder.json` describes native project/package identifiers, and `app.json` supplies the registered native component name. Keep native names and bundle/package IDs consistent when configuring your own application.
+Choose your public destination explicitly:
 
-Native configuration is required before launching:
+```sh
+node scripts/onboarding/cli.mjs detect
+node scripts/onboarding/cli.mjs configure --project YOUR_PROJECT_SLUG --franchise-slug YOUR_FRANCHISE_SLUG
+node scripts/onboarding/cli.mjs doctor
+```
+
+Detection is separate from consumer login. Public validation confirms the destination, not project ownership or app authentication. If no developer connection is available, provide the exact project code manually. Manual edits must deliberately include `localProjectConfigured: true` as described in [setup.md](setup.md#explicit-development-opt-in).
+
+For manual configuration, edit `src/config.json`: set `project` to your own project. Review the app identifiers, API version/language, API/socket endpoints and existing feature flags for your deployment. Public app IDs and endpoint defaults are included; they do not provide backend access or credentials. `builder.json` describes native project/package identifiers, and `app.json` supplies the registered native component name. Keep native names and bundle/package IDs consistent when configuring your own application.
+
+For ordinary native launches, configure your own registrations below. The explicit Debug Simulator preview in [setup.md](setup.md) can open without Firebase; it does not validate production integrations.
+
+Normal native configuration:
 
 - Register your Android/iOS apps in your own Firebase project. Add `android/app/google-services.json` and `ios/GoogleService-Info.plist`, including the iOS file in the `AppFranchises` target. These registrations are not supplied.
 - Replace `_GOOGLE_MAPS_API_KEY_` in the Android manifest and iOS AppDelegate with your restricted keys for the corresponding native bundle/package. Set your own Google credentials in backend configuration where required.
@@ -36,9 +64,9 @@ Do not commit credentials or private signing files. Generated service registrati
 For iOS dependencies:
 
 ```sh
-bundle install
+bundle _2.7.1_ install
 cd ios
-bundle exec pod install
+bundle _2.7.1_ exec pod install --deployment
 cd ..
 ```
 
@@ -47,6 +75,8 @@ Start Metro with `yarn start`, then run `yarn android` or `yarn ios` from anothe
 ## Local checks
 
 ```sh
+node --test scripts/onboarding/*.test.mjs
+yarn test:onboarding
 yarn lint:check
 yarn tsc --noEmit
 yarn test --runInBand --watchman=false

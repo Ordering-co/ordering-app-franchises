@@ -1,3 +1,4 @@
+import { isLocalSimulatorMode } from '../../onboarding/ios-local-mode';
 import React, { useState, createContext } from 'react';
 import {
   checkNotifications,
@@ -16,6 +17,7 @@ export const PermissionsProvider = ({ children }: any) => {
   const [notificationsPermissions, setNotificationsPermissions] = useState({});
 
   const askNotificationsPermission = async () => {
+    if (isLocalSimulatorMode()) return;
     checkNotifications().then(({ status }) => {
       if (status === RESULTS.BLOCKED || status === RESULTS.DENIED) {
         requestNotifications(['alert']).then(({ status }) => {
