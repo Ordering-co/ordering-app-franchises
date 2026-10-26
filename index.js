@@ -7,6 +7,9 @@ import { getMessaging, setBackgroundMessageHandler } from '@react-native-firebas
 import App from './App'
 import { name as appName } from './app.json'
 import { isLocalSimulatorMode } from './src/onboarding/ios-local-mode'
+import { initSentry } from './src/utils/sentry'
+
+initSentry()
 
 if (!isLocalSimulatorMode()) {
   setBackgroundMessageHandler(getMessaging(), async () => {})
